@@ -1,0 +1,10 @@
+var import_events = require("events");,var PostInsertionNotifier = class extends xae.EventEmitter {
+  static {
+    __name(this, "PostInsertionNotifier");
+  }
+};,function createProductionContext(configProvider) {
+  let ctx = new Context();
+  return ctx.set(ConfigProvider, configProvider), ctx.set(Clock, new Clock()), ctx.set(BuildInfo, new BuildInfo()), setupRudimentaryLogging(ctx), logger.debug(ctx, "Initializing main context"), ctx.set(CompletionsCache, new CompletionsCache()), ctx.set(CopilotTokenNotifier, new CopilotTokenNotifier()), ctx.set(CertificateReaderCache, new CertificateReaderCache()), ctx.set(RootCertificateReader, getRootCertificateReader(ctx)), ctx.set(ProxySocketFactory, getProxySocketFactory(ctx)), ctx.set(Fetcher, new HelixFetcher(ctx)), ctx.set(LanguageDetection, getLanguageDetection(ctx)), ctx.set(Features, new Features(ctx)), ctx.set(PostInsertionNotifier, new PostInsertionNotifier()), ctx.set(TelemetryUserConfig, new TelemetryUserConfig(ctx)), ctx.set(TelemetryEndpointUrl, new TelemetryEndpointUrl()), ctx.set(TelemetryReporters, new TelemetryReporters()), ctx.set(HeaderContributors, new HeaderContributors()), ctx.set(UserErrorNotifier, new UserErrorNotifier(ctx)), ctx.set(ContextualFilterManager, new ContextualFilterManager()), ctx.set(OpenAIFetcher, new LiveOpenAIFetcher()), ctx.set(BlockModeConfig, new ConfigBlockModeConfig()), ctx.set(UrlOpener, new RealUrlOpener()), ctx.set(ExpConfigMaker, new ExpConfigNone()), ctx.set(PromiseQueue, new PromiseQueue()), ctx.set(uD.SnippetOrchestrator, new uD.SnippetOrchestrator()), ctx.set(ForceMultiLine, ForceMultiLine.default), ctx;
+},__name(createProductionContext, "createProductionContext");,function setupRudimentaryLogging(ctx) {
+  ctx.set(RuntimeMode, RuntimeMode.fromEnvironment(!1)), ctx.set(LogVerbose, new LogVerbose(isVerboseLoggingEnabled(ctx))), ctx.set(LogTarget, new ConsoleLog(console));
+},__name(setupRudimentaryLogging, "setupRudimentaryLogging");,var logger = new Logger(0, "context");

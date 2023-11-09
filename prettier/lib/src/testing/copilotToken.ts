@@ -1,0 +1,1 @@
+var fs = Ns(require("fs"));

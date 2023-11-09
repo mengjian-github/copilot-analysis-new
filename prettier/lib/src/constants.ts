@@ -1,0 +1,1 @@
+var CopilotConfigPrefix = "github.copilot";

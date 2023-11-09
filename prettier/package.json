@@ -1,0 +1,529 @@
+var require_package = __commonJSMin((exports, module) => {
+  module.exports = {
+    name: "copilot",
+    displayName: "GitHub Copilot",
+    description: "Your AI pair programmer",
+    version: "1.134.0",
+    build: "535",
+    buildType: "prod",
+    publisher: "GitHub",
+    preview: !1,
+    homepage: "https://github.com/features/copilot",
+    bugs: {
+      url: "https://github.com/community/community/discussions/categories/copilot"
+    },
+    qna: "https://github.com/github-community/community/discussions/categories/copilot",
+    icon: "assets/Copilot-App-Icon.png",
+    pricing: "Trial",
+    extensionPack: ["GitHub.copilot-chat"],
+    engines: {
+      vscode: "^1.75.0",
+      node: ">=16.14.0",
+      npm: ">=8.0.0"
+    },
+    categories: ["Programming Languages", "Machine Learning", "Education", "Snippets"],
+    keywords: ["ai", "openai", "codex", "pilot", "snippets", "documentation", "autocomplete", "intellisense", "refactor", "javascript", "python", "typescript", "php", "go", "golang", "ruby", "c++", "c#", "java", "kotlin", "co-pilot"],
+    badges: [{
+      url: "https://img.shields.io/badge/GitHub%20Copilot-Subscription%20Required-orange",
+      href: "https://github.com/github-copilot/signup",
+      description: "Sign up for GitHub Copilot"
+    }, {
+      url: "https://img.shields.io/github/stars/github/copilot-docs?style=social",
+      href: "https://github.com/github/copilot-docs",
+      description: "Star Copilot on GitHub"
+    }, {
+      url: "https://img.shields.io/youtube/channel/views/UC7c3Kb6jYCRj4JOHHZTxKsQ?style=social",
+      href: "https://www.youtube.com/@GitHub/search?query=copilot",
+      description: "Check out GitHub on Youtube"
+    }, {
+      url: "https://img.shields.io/twitter/follow/github?style=social",
+      href: "https://twitter.com/github",
+      description: "Follow GitHub on Twitter"
+    }],
+    activationEvents: ["onStartupFinished"],
+    main: "./dist/extension",
+    enabledApiProposals: ["inlineCompletionsAdditions"],
+    contributes: {
+      walkthroughs: [{
+        id: "copilotWelcome",
+        title: "GitHub Copilot",
+        description: "Your AI pair programmer to write code faster and with less work",
+        when: "!isWeb",
+        steps: [{
+          id: "copilot.signin",
+          title: "Sign in with GitHub",
+          description: `To get started with Copilot, sign in with your GitHub account.
+Double-check to use the right GitHub account. You can also sign in later using the account menu.
+ 
+[Sign In](command:github.copilot.signIn)`,
+          when: "!github.copilot.activated",
+          completionEvents: ["onContext:github.copilot.activated"],
+          media: {
+            image: "assets/walkthrough/sign-in.svg",
+            altText: "Sign in to GitHub via Copilot's notification or VS Code's account menu"
+          }
+        }, {
+          id: "copilot.firstsuggest",
+          title: "AI-powered suggestions",
+          description: `Copilot suggests lines of code **as you type** and multiple lines for **function signatures**.
+  
+**Prompts in comments** make suggestions specific to your desired outcome, logic and steps.`,
+          media: {
+            svg: "assets/walkthrough/ai-powered-suggestions.svg",
+            altText: "Different types of suggestions visualized"
+          }
+        }, {
+          id: "copilot.chat",
+          title: "Chat with Copilot",
+          description: "Ask Copilot general programming questions in the chat view. Copilot can also fix problems, scaffold tests, or refactor your code. Type ``/`` to view all available chat commands.\n[Chat with Copilot](command:workbench.panel.chat.view.copilot.focus)",
+          when: "!github.copilot.interactiveSession.disabled",
+          media: {
+            svg: "assets/walkthrough/copilot-chat.svg",
+            altText: "Copilot Chat view in the sidebar"
+          }
+        }, {
+          id: "copilot.realfiles.openrecent",
+          title: "Code as context",
+          description: `The **more specific context** you provide Copilot, the **better** suggestions get! Context is not just current code and comments, but other open files.
+  
+[Try Copilot in Your Code](command:workbench.action.openRecent)`,
+          when: "workspaceFolderCount == 0",
+          media: {
+            svg: "assets/walkthrough/code-as-context.svg",
+            altText: "An editor with code being suggested by Copilot in gray text"
+          }
+        }, {
+          id: "copilot.realfiles.quickopen",
+          title: "Code as context",
+          description: `The **more context** you give Copilot, the **better** suggestions get! Context is not just the current code, but other open files.
+  
+[Try Copilot in Your Code](command:workbench.action.quickOpen)`,
+          when: "workspaceFolderCount != 0",
+          media: {
+            svg: "assets/walkthrough/code-as-context.svg",
+            altText: "An editor with code being suggested by Copilot in gray text"
+          }
+        }, {
+          id: "copilot.iterate",
+          title: "You are in control",
+          description: `Just as you would review a colleague's code, you should always assess, analyze, and validate AI-generated code.
+  
+If the first suggestion doesn't work, Copilot can generate more options. You can edit the Copilot settings and keyboard shortcuts to personalize your experience.
+  
+[Edit keyboard shortcuts](command:workbench.action.openGlobalKeybindings?%5B%22copilot%22%5D)
+  
+[Personalize settings](command:workbench.action.openSettings?%5B%22copilot%22%5D)`,
+          media: {
+            image: "assets/walkthrough/you-are-in-control.svg",
+            altText: "An editor with a toolbar widget overlay showing arrows for navigating multiple suggestions from Copilot"
+          }
+        }, {
+          id: "copilot.creativity",
+          title: "Powered by your creativity",
+          description: `Pair up with AI to outline your idea in a comment, then generate the implementation, and then test suites. Or, work backwards from example output!
+Copilot will keep surprising you as you challenge it.
+  
+[Prompts, tips, and use cases](https://github.blog/2023-06-20-how-to-write-better-prompts-for-github-copilot/)`,
+          media: {
+            svg: "assets/walkthrough/powered-by-your-creativity.svg",
+            altText: "Metrics showing how much Copilot increases productivity for developers. The metrics read: 74% focus on more satisfying work. 88% feel more productive. 96% are faster with more repetitive tasks."
+          }
+        }]
+      }],
+      commands: [{
+        command: "github.copilot.acceptCursorPanelSolution",
+        title: "Accept panel suggestion at the cursor",
+        category: "GitHub Copilot"
+      }, {
+        command: "github.copilot.signIn",
+        title: "Sign In",
+        category: "GitHub Copilot",
+        enablement: "!github.copilot.activated"
+      }, {
+        command: "github.copilot.previousPanelSolution",
+        title: "Navigate to the previous panel suggestion",
+        category: "GitHub Copilot"
+      }, {
+        command: "github.copilot.nextPanelSolution",
+        title: "Navigate to the next panel suggestion",
+        category: "GitHub Copilot"
+      }, {
+        command: "github.copilot.generate",
+        title: "Open Completions Panel",
+        category: "GitHub Copilot"
+      }, {
+        command: "github.copilot.toggleCopilot",
+        title: "Enable/Disable Copilot completions",
+        category: "GitHub Copilot"
+      }, {
+        command: "github.copilot.sendFeedback",
+        title: "Send Feedback",
+        category: "GitHub Copilot"
+      }, {
+        command: "github.copilot.collectDiagnostics",
+        title: "Collect Diagnostics",
+        category: "GitHub Copilot"
+      }, {
+        command: "github.copilot.openLogs",
+        title: "Open Logs",
+        category: "GitHub Copilot"
+      }],
+      keybindings: [{
+        command: "github.copilot.generate",
+        key: "ctrl+enter",
+        mac: "ctrl+enter",
+        when: "editorTextFocus && github.copilot.activated && !inInteractiveInput && !interactiveEditorFocused"
+      }, {
+        command: "github.copilot.acceptCursorPanelSolution",
+        key: "ctrl+/",
+        mac: "ctrl+/",
+        when: "github.copilot.activated && github.copilot.panelVisible"
+      }, {
+        command: "github.copilot.previousPanelSolution",
+        key: "alt+[",
+        mac: "alt+[",
+        when: "github.copilot.activated && github.copilot.panelVisible"
+      }, {
+        command: "github.copilot.nextPanelSolution",
+        key: "alt+]",
+        mac: "alt+]",
+        when: "github.copilot.activated && github.copilot.panelVisible"
+      }, {
+        command: "editor.action.inlineSuggest.trigger",
+        key: "alt+\\",
+        when: "editorTextFocus && !editorHasSelection && config.github.copilot.inlineSuggest.enable && !inlineSuggestionsVisible"
+      }],
+      menus: {
+        "editor/inlineCompletions/actions": [{
+          command: "github.copilot.generate",
+          when: "github.copilot.activated"
+        }],
+        commandPalette: [{
+          command: "github.copilot.generate",
+          when: "github.copilot.activated"
+        }, {
+          command: "github.copilot.toggleCopilot",
+          when: "github.copilot.activated"
+        }, {
+          command: "github.copilot.sendFeedback",
+          when: "github.copilot.activated"
+        }, {
+          command: "github.copilot.collectDiagnostics"
+        }]
+      },
+      configuration: [{
+        title: "Copilot",
+        properties: {
+          "github.copilot.advanced": {
+            type: "object",
+            title: "Advanced Settings",
+            properties: {
+              secret_key: {
+                type: "string",
+                default: "",
+                description: "Secret API key"
+              },
+              length: {
+                type: "integer",
+                default: 500,
+                description: "Length of code to generate in tokens"
+              },
+              temperature: {
+                type: "string",
+                default: "",
+                description: "Override sampling temperature (range 0.0 - 1.0)"
+              },
+              top_p: {
+                type: "number",
+                default: 1,
+                description: "Top probability mass to consider"
+              },
+              stops: {
+                type: "object",
+                default: {
+                  "*": [`
+
+
+`],
+                  python: [`
+def `, `
+class `, `
+if `, `
+
+#`]
+                },
+                description: "Configure per-language stop sequences"
+              },
+              indentationMode: {
+                type: "object",
+                default: {
+                  python: !1,
+                  javascript: !1,
+                  javascriptreact: !1,
+                  jsx: !1,
+                  typescript: !1,
+                  typescriptreact: !1,
+                  go: !1,
+                  ruby: !1,
+                  "*": !0
+                },
+                markdownDescription: "Enable or disable indentation block termination for specified [languages](https://code.visualstudio.com/docs/languages/identifiers). Set to 'clientandserver' to run both parser-based and indent-based termination."
+              },
+              inlineSuggestCount: {
+                type: "integer",
+                default: 3,
+                description: "Number of inline suggestions to fetch"
+              },
+              listCount: {
+                type: "integer",
+                default: 10,
+                description: "Number of solutions to list in Open GitHub Copilot"
+              },
+              authProvider: {
+                type: "string",
+                enum: ["github", "github-enterprise"],
+                enumDescriptions: ["GitHub.com", "GitHub Enterprise"],
+                default: "github",
+                description: "The GitHub identity to use for Copilot"
+              },
+              "debug.showScores": {
+                type: "boolean",
+                default: !1,
+                description: "Show scores in sorted solutions"
+              },
+              "debug.overrideEngine": {
+                type: "string",
+                default: "",
+                description: "Override engine name"
+              },
+              "debug.overrideProxyUrl": {
+                type: "string",
+                default: "",
+                description: "Override GitHub authentication proxy full URL"
+              },
+              "debug.testOverrideProxyUrl": {
+                type: "string",
+                default: "",
+                description: "Override GitHub authentication proxy URL when running tests"
+              },
+              "debug.overrideCapiUrl": {
+                type: "string",
+                default: "",
+                description: "Override GitHub Copilot API full URL"
+              },
+              "debug.testOverrideCapiUrl": {
+                type: "string",
+                default: "",
+                description: "Override GitHub Copilot API URL when running tests"
+              },
+              "debug.filterLogCategories": {
+                type: "array",
+                default: [],
+                description: "Show only log categories listed in this setting. If an array is empty, show all loggers"
+              }
+            }
+          },
+          "github.copilot.enable": {
+            type: "object",
+            default: {
+              "*": !0,
+              plaintext: !1,
+              markdown: !1,
+              scminput: !1
+            },
+            additionalProperties: "boolean",
+            markdownDescription: "Enable or disable Copilot completions for specified [languages](https://code.visualstudio.com/docs/languages/identifiers)"
+          },
+          "github.copilot.inlineSuggest.enable": {
+            type: "boolean",
+            default: !0,
+            deprecationMessage: "Deprecated: Please use github.copilot.editor.enableAutoCompletions instead.",
+            description: "Show inline suggestions"
+          },
+          "github.copilot.editor.enableAutoCompletions": {
+            type: "boolean",
+            scope: "language-overridable",
+            default: !0,
+            description: "Automatically show inline completions"
+          }
+        }
+      }],
+      configurationDefaults: {
+        "editor.tokenColorCustomizations": {
+          "[*Light*]": {
+            textMateRules: [{
+              scope: "ref.matchtext",
+              settings: {
+                foreground: "#000"
+              }
+            }]
+          },
+          "[*Dark*]": {
+            textMateRules: [{
+              scope: "ref.matchtext",
+              settings: {
+                foreground: "#fff"
+              }
+            }]
+          }
+        }
+      },
+      languages: [{
+        id: "code-referencing"
+      }],
+      grammars: [{
+        language: "code-referencing",
+        scopeName: "text.ref",
+        path: "./syntaxes/ref.tmGrammar.json"
+      }],
+      icons: {
+        "copilot-logo": {
+          description: "GitHub Copilot icon",
+          default: {
+            fontPath: "assets/copilot.woff",
+            fontCharacter: "\\0041"
+          }
+        },
+        "copilot-warning": {
+          description: "GitHub Copilot icon",
+          default: {
+            fontPath: "assets/copilot.woff",
+            fontCharacter: "\\0042"
+          }
+        },
+        "copilot-notconnected": {
+          description: "GitHub Copilot icon",
+          default: {
+            fontPath: "assets/copilot.woff",
+            fontCharacter: "\\0043"
+          }
+        },
+        "copilot-chat": {
+          description: "GitHub Copilot chat icon",
+          default: {
+            fontPath: "assets/copilot.woff",
+            fontCharacter: "\\F101"
+          }
+        }
+      },
+      iconFonts: [{
+        id: "copilot-font",
+        src: [{
+          path: "assets/copilot.woff",
+          format: "woff"
+        }]
+      }]
+    },
+    scripts: {
+      build: "run-s build:prompt build:root",
+      "build:prompt": "npm -C prompt run build",
+      "build:root": "tsx .esbuild.ts",
+      clean: "./script/build/clean.sh",
+      "forbid-sources-content:extension": "node script/forbid-sources-content.js --extension",
+      generate_languages: "ts-node script/generateLanguages.ts && prettier --write lib/src/language/generatedLanguages.ts",
+      get_token: "ts-node script/getToken.ts",
+      lint: "npm-run-all lint:*",
+      "lint:deps": "depcruise -c .dependency-cruiser.js .",
+      "lint:eslint": "eslint . --cache",
+      "lint:prettier": "prettier --check .",
+      "lint:types": "tsc --noEmit",
+      prebuild: "./script/build/clean-deprecated-modules.sh && npm install",
+      pretest: "npm run build",
+      "pretest:extension": "npm run build",
+      "pretest:lsp-client": "npm run build",
+      prewatch: "npm run build",
+      start: "npm run watch",
+      test: 'npm-run-all "test:* --ignore-scripts" lint',
+      "test:agent": 'mocha "agent/src/**/*.test.ts"',
+      "test:extension": "tsx extension/test/runTest.ts",
+      "test:lib": 'mocha "lib/src/**/*.test.ts"',
+      "test:lib-e2e": 'mocha "lib/e2e/src/**/*.test.ts"',
+      "test:lsp-client": "npm -C lsp-client run test",
+      "test:prompt": "npm -C prompt run test",
+      "vscode-dts": "vscode-dts dev && mv vscode.proposed.*.ts extension/src",
+      "vscode:prepublish": 'run-s "build --ignore-scripts" forbid-sources-content:extension',
+      "vscode:uninstall": "node dist/extensionUninstalled.js",
+      vsix: "vsce package",
+      watch: "run-p watch:*",
+      "watch:prompt": "npm -C prompt run watch",
+      "watch:root": "tsx .esbuild.ts --watch",
+      "watch:types": "tsc --noEmit --watch --preserveWatchOutput"
+    },
+    workspaces: ["prompt"],
+    devDependencies: {
+      "@datadog/datadog-ci": "^2.23.0",
+      "@github/prettier-config": "0.0.6",
+      "@types/crypto-js": "^4.1.1",
+      "@types/git-url-parse": "^9.0.1",
+      "@types/js-yaml": "^4.0.6",
+      "@types/kerberos": "^1.1.2",
+      "@types/mocha": "^10.0.1",
+      "@types/node": "^16.18.24",
+      "@types/sinon": "^10.0.13",
+      "@types/tunnel": "^0.0.3",
+      "@types/uuid": "^9.0.1",
+      "@types/vscode": "^1.75.0",
+      "@types/yargs": "^17.0.24",
+      "@typescript-eslint/eslint-plugin": "^5.59.5",
+      "@typescript-eslint/parser": "^5.62.0",
+      "@vscode/test-electron": "^2.3.4",
+      "@vscode/vsce": "^2.21.0",
+      boxen: "^5.1.2",
+      chalk: "^4.1.2",
+      "dependency-cruiser": "^13.0.2",
+      esbuild: "^0.19.4",
+      "esbuild-plugin-copy": "^2.1.1",
+      "esbuild-plugin-summary": "^0.0.2",
+      eslint: "^8.50.0",
+      "eslint-plugin-no-only-tests": "^3.1.0",
+      fantasticon: "^2.0.0",
+      glob: "^10.3.4",
+      "js-yaml": "^4.1.0",
+      mocha: "^10.2.0",
+      "mocha-junit-reporter": "^2.2.1",
+      "mocha-multi-reporters": "^1.5.1",
+      "npm-run-all": "^4.1.5",
+      pkg: "^5.8.1",
+      prettier: "3.0.1",
+      "prettier-plugin-organize-imports": "^3.2.3",
+      proxy: "^2.1.1",
+      sinon: "^16.0.0",
+      "ts-dedent": "^2.2.0",
+      "ts-mocha": "^10.0.0",
+      "ts-node": "^10.9.1",
+      tsx: "^3.14.0",
+      "typed-emitter": "^2.1.0",
+      typescript: "^5.1.6",
+      "vscode-dts": "^0.3.3",
+      "vscode-languageserver-protocol": "^3.16",
+      zlib: "^1.0.5"
+    },
+    dependencies: {
+      "@adobe/helix-fetch": "github:devm33/helix-fetch#1088e599270f36632703f138d88c2100cbe468db",
+      "@github/copilot-promptlib": "file:prompt",
+      "@github/memoize": "1.1.4",
+      "@roamhq/mac-ca": "^1.0.7",
+      "@sinclair/typebox": "^0.30.0",
+      applicationinsights: "^2.7.3",
+      "crypto-js": "^4.2.0",
+      diff: "^5.1.0",
+      dldr: "^0.0.10",
+      "git-url-parse": "^13.1.0",
+      ignore: "^5.2.4",
+      kerberos: "^2.0.1",
+      minimatch: "^9.0.3",
+      open: "^8.4.2",
+      semver: "^7.5.4",
+      "source-map-support": "^0.5.21",
+      uuid: "^9.0.0",
+      "vscode-languageserver": "^8.1.0",
+      "vscode-languageserver-textdocument": "~1.0.11",
+      "vscode-uri": "^3.0.7",
+      "windows-ca-certs": "^0.0.3",
+      yargs: "^17.7.2"
+    },
+    overrides: {
+      bindings: "github:devm33/node-bindings#6b57e6883b34dbb6942467a7e49afce99d9d6832"
+    }
+  };
+});
