@@ -390,7 +390,9 @@ function setupExperimentationService(ctx) {
 
 入口主逻辑细枝末节比较多，这里画图做个总结：
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/4dda21c1-f337-43e2-abc6-cd65f29a3725/28aae2de-7cee-40ea-aa01-92f92d6e5d00/Untitled.png)
+
+![image](https://files.mdnice.com/user/13429/e26bfdf4-dc58-40cc-bd80-23a3363914a7.jpg)
+
 
 在入口初始化中，最重要的是标红的两步：
 
