@@ -1,5 +1,9 @@
 # 再次揭秘Copilot：sourcemap逆向分析
 
+## 源码详细分析
+- [copilot源码详细分析（一）从package.json说起](./docs/copilot源码详细分析（一）从package.json说起.md)
+- [copilot源码详细分析（二）activate入口分析](./docs/copilot源码详细分析（二）activate入口分析.md)
+
 ## 背景
 
 今年五月的时候我写了一篇文章《**[花了大半个月，我终于逆向分析了Github Copilot](https://mp.weixin.qq.com/s?__biz=Mzk0ODM5NTEyNA==&amp;mid=2247484980&amp;idx=1&amp;sn=240c76200248bc35101710683a516ff6&amp;chksm=c3690b2ff41e82399f6de726204d075d0b28313019e34cedc5608c93907488be2ce61ff375e5&token=840731485&lang=zh_CN#rd)**》，最近发现`copilot`将`.map`文件也提交了上来，**`sourcemap`**中包含了整体源码的结构信息和部分变量信息，这无疑为分析`copilot`源码带来了极大的便利，因此再次分析一波。

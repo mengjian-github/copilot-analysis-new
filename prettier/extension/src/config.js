@@ -3,8 +3,8 @@ var vscode = Ns(require("vscode"));,var packageJson = rO();,function stringOrStr
 },__name(stringOrStringify, "stringOrStringify");,var VSCodeConfigProvider = class extends ConfigProvider {
     constructor() {
       super();
-      this.config = Lc.workspace.getConfiguration(CopilotConfigPrefix), Lc.workspace.onDidChangeConfiguration(changeEvent => {
-        changeEvent.affectsConfiguration(CopilotConfigPrefix) && (this.config = Lc.workspace.getConfiguration(CopilotConfigPrefix));
+      this.config = vscode.workspace.getConfiguration(CopilotConfigPrefix), vscode.workspace.onDidChangeConfiguration(changeEvent => {
+        changeEvent.affectsConfiguration(CopilotConfigPrefix) && (this.config = vscode.workspace.getConfiguration(CopilotConfigPrefix));
       });
     }
     static {
@@ -41,7 +41,7 @@ var vscode = Ns(require("vscode"));,var packageJson = rO();,function stringOrStr
     getLanguageConfig(key, language) {
       let obj = this.getConfig(key);
       if (language === void 0) {
-        let editor = Lc.window.activeTextEditor;
+        let editor = vscode.window.activeTextEditor;
         language = editor && editor.document.languageId;
       }
       return obj?.[language ?? "*"] ?? obj?.["*"];
@@ -57,11 +57,11 @@ var vscode = Ns(require("vscode"));,var packageJson = rO();,function stringOrStr
       __name(this, "VSCodeEditorInfo");
     }
     getEditorInfo() {
-      let remoteName = Lc.env.remoteName;
+      let remoteName = vscode.env.remoteName;
       return {
         name: "vscode",
-        version: Lc.version,
-        root: Lc.env.appRoot,
+        version: vscode.version,
+        root: vscode.env.appRoot,
         remoteName: remoteName && (telemetryAllowedAuthorities.has(remoteName) ? remoteName : "other")
       };
     }
@@ -74,6 +74,6 @@ var vscode = Ns(require("vscode"));,var packageJson = rO();,function stringOrStr
   };,async function toggleCopilotEnablement(ctx, scope) {
   let configProvider = ctx.get(ConfigProvider),
     isEnabled = getEnabledConfig(ctx) || !1,
-    currentLanguage = Lc.window.activeTextEditor?.document.languageId;
-  isEnabled && Lc.commands.executeCommand("editor.action.inlineSuggest.hide"), scope === "global" ? await configProvider.updateEnabledConfig(ctx, "*", !getEnabledConfig(ctx, "*")) : await configProvider.updateEnabledConfig(ctx, currentLanguage || "*", !isEnabled);
+    currentLanguage = vscode.window.activeTextEditor?.document.languageId;
+  isEnabled && vscode.commands.executeCommand("editor.action.inlineSuggest.hide"), scope === "global" ? await configProvider.updateEnabledConfig(ctx, "*", !getEnabledConfig(ctx, "*")) : await configProvider.updateEnabledConfig(ctx, currentLanguage || "*", !isEnabled);
 },__name(toggleCopilotEnablement, "toggleCopilotEnablement");
