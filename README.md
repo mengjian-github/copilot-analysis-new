@@ -3,6 +3,7 @@
 ## 源码详细分析
 - [copilot源码详细分析（一）从package.json说起](./docs/copilot源码详细分析（一）从package.json说起.md)
 - [copilot源码详细分析（二）activate入口分析](./docs/copilot源码详细分析（二）activate入口分析.md)
+- [copilot源码详细分析（三）ghostText核心逻辑](./docs/copilot源码详细分析（三）ghostText核心逻辑.md)
 
 ## 背景
 
