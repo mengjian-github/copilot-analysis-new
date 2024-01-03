@@ -48,7 +48,9 @@ function updateNodeName(node, name) {
   } else if (node.type === "ReturnStatement") {
     updateNodeName(node.argument, name);
   } else if (node.type === "BlockStatement") {
-    updateNodeName(node.body[0], name);
+    if (node.body[0]) {
+      updateNodeName(node.body[0], name);
+    }
   } else if (node.type === "UnaryExpression") {
     updateNodeName(node.argument, name);
   } else if (node.type === "ObjectProperty") {
